@@ -49,7 +49,7 @@ flags.DEFINE_float('l2_norm_clip', 1.0, 'Clipping norm')
 flags.DEFINE_integer('batch_size', 256, 'Batch size')
 flags.DEFINE_integer('epochs', 60, 'Number of epochs')
 flags.DEFINE_integer(
-	'microbatches', 16, 'Number of microbatches '
+	'microbatches', 256, 'Number of microbatches '
 	'(must evenly divide batch_size)')
 flags.DEFINE_string('model_dir', None, 'Model directory')
 flags.DEFINE_string('model', None, 'ff, lr, or cnn')
