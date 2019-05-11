@@ -311,6 +311,7 @@ def cnn_model_fn(features, labels, mode):
 											eval_metric_ops=eval_metric_ops)
 
 def load_cifar_pca():
+	print('loaded cifar pca')
 	xs = np.load('data/cifar_100_features.p',allow_pickle=True)
 	ys = np.load('data/cifar_100_labels.p', allow_pickle=True)
 	train_data = xs[:10000]
