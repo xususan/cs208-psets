@@ -155,8 +155,9 @@ def ff_model_fn(features, labels, mode):
 	input_layer = tf.reshape(features['x'], [-1, 50])
 	# model = models.Sequential()
 	y = layers.Dense(
-		50, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(C)).apply(input_layer)
-	logits = layers.Dense(100).apply(y)
+		50, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(C)
+		).apply(input_layer)
+	logits = layers.Dense(100, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
 
 
 
