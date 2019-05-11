@@ -373,7 +373,7 @@ def main(unused_argv):
 		raise ValueError('not supported flags.model')
 
 	# Instantiate the tf.Estimator.
-	mnist_classifier = tf.estimator.Estimator(model_fn=cnn_model_fn,
+	mnist_classifier = tf.estimator.Estimator(model_fn=model_function,
 											model_dir=FLAGS.model_dir)
 
 	# Create tf.Estimator input functions for the training and test data.
