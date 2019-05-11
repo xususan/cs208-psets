@@ -367,6 +367,8 @@ def main(unused_argv):
 		model_function = cnn_model_fn
 	elif FLAGS.model == 'ff':
 		model_function = ff_model_fn
+	elif FLAGS.model == 'lr':
+		model_function = lr_model_fn
 	else:
 		raise ValueError('not supported flags.model')
 
