@@ -429,6 +429,8 @@ def main(unused_argv):
 	print('train_accuracy is: %.3f' % (train_accuracy))
 
 	eval_results = mnist_classifier.predict(input_fn=predict_training_input_fn)
+	for result in eval_results:
+		print 'result: {}'.format(result)
 
 	print("try attack")
 
