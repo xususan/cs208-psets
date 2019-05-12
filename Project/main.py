@@ -294,7 +294,7 @@ def load_cifar():
 
 
 def main(unused_argv):
-	tf.logging.set_verbosity(tf.logging.ERROR)
+	tf.logging.set_verbosity(tf.logging.INFO)
 	if FLAGS.dp and FLAGS.batch_size % FLAGS.microbatches != 0:
 		raise ValueError('Number of microbatches should divide evenly batch_size')
 
