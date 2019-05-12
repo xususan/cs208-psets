@@ -38,7 +38,7 @@ try:
 except:  # pylint: disable=bare-except
 	GradientDescentOptimizer = tf.optimizers.SGD  # pylint: disable=invalid-name
 np.random.seed(31415)
-tf.random.seed(31415)
+tf.random.set_random_seed(31415)
 FLAGS = flags.FLAGS
 
 flags.DEFINE_boolean(
