@@ -183,165 +183,47 @@ def ff_model_fn(features, labels, mode):
 	"""Model function for a feed forward network."""
 	C = .00001
 
-	# Define CNN architecture using tf.keras.layers.
-	input_layer = tf.reshape(features['x'], [-1, 50])
-	# model = models.Sequential()
-	y = layers.Dense(
-		50, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(C)
-		).apply(input_layer)
-	logits = layers.Dense(100, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
+	def ff_model(x):
+		# Define FF architecture using tf.keras.layers.
+		input_layer = tf.reshape(x, [-1, 50])
+		# model = models.Sequential()
+		y = layers.Dense(
+			50, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(C)
+			).apply(input_layer)
+		logits = layers.Dense(100, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
+		return y
 
-
-
-	# Calculate loss as a vector (to support microbatches in DP-SGD).
-	vector_loss = tf.nn.sparse_softmax_cross_entropy_with_logits(labels= labels,logits=logits)
-	# Define mean of loss across minibatch (for reporting through tf.Estimator).
-	scalar_loss = tf.reduce_mean(vector_loss)
-
-	# Configure the training op (for TRAIN mode).
-	if mode == tf.estimator.ModeKeys.TRAIN:
-
-		if FLAGS.dpsgd:
-			ledger = privacy_ledger.PrivacyLedger(
-				population_size=60000,
-				selection_probability=(FLAGS.batch_size / 60000))
-
-			# Use DP version of GradientDescentOptimizer. Other optimizers are
-			# available in dp_optimizer. Most optimizers inheriting from
-			# tf.train.Optimizer should be wrappable in differentially private
-			# counterparts by calling dp_optimizer.optimizer_from_args().
-			optimizer = dp_optimizer.DPGradientDescentGaussianOptimizer(
-				l2_norm_clip=FLAGS.l2_norm_clip,
-				noise_multiplier=FLAGS.noise_multiplier,
-				num_microbatches=FLAGS.microbatches,
-				ledger=ledger,
-				learning_rate=FLAGS.learning_rate)
-			training_hooks = [
-				EpsilonPrintingTrainingHook(ledger)
-			]
-			opt_loss = vector_loss
-		else:
-			optimizer = GradientDescentOptimizer(learning_rate=FLAGS.learning_rate)
-			training_hooks = []
-			opt_loss = scalar_loss
-		global_step = tf.train.get_global_step()
-		train_op = optimizer.minimize(loss=opt_loss, global_step=global_step)
-		# In the following, we pass the mean of the loss (scalar_loss) rather than
-		# the vector_loss because tf.estimator requires a scalar loss. This is only
-		# used for evaluation and debugging by tf.estimator. The actual loss being
-		# minimized is opt_loss defined above and passed to optimizer.minimize().
-		return tf.estimator.EstimatorSpec(mode=mode,
-											loss=scalar_loss,
-											train_op=train_op,
-											training_hooks=training_hooks)
-
-	# Add evaluation metrics (for EVAL mode).
-	elif mode == tf.estimator.ModeKeys.EVAL:
-		eval_metric_ops = {
-			'accuracy':
-				tf.metrics.accuracy(
-					labels=labels,
-					predictions=tf.argmax(input=logits, axis=1))
-		}
-
-		return tf.estimator.EstimatorSpec(mode=mode,
-											loss=scalar_loss,
-											eval_metric_ops=eval_metric_ops)
+	return model_function_from_model(ff_model, features, labels, mode)
 
 
 def cnn_model_fn(features, labels, mode):
 	"""Model function for a CNN."""
 
-	# Define CNN architecture using tf.keras.layers.
-	y = tf.reshape(features['x'], [-1, 32, 32, 3])
-	y = layers.Conv2D(32, (3, 3), padding='same').apply(y)
-	y = layers.Activation('relu').apply(y)
-	y = layers.Conv2D(32, (3, 3)).apply(y)
-	y = layers.Activation('relu').apply(y)
-	y = layers.MaxPooling2D(pool_size=(2, 2)).apply(y)
-	y = layers.Dropout(0.25).apply(y)
+	def cnn_model(x):
+		# Define CNN architecture using tf.keras.layers.
+		y = tf.reshape(x, [-1, 32, 32, 3])
+		y = layers.Conv2D(32, (3, 3), padding='same').apply(y)
+		y = layers.Activation('relu').apply(y)
+		y = layers.Conv2D(32, (3, 3)).apply(y)
+		y = layers.Activation('relu').apply(y)
+		y = layers.MaxPooling2D(pool_size=(2, 2)).apply(y)
+		y = layers.Dropout(0.25).apply(y)
 
-	y = layers.Conv2D(64, (3, 3), padding='same').apply(y)
-	y = layers.Activation('relu').apply(y)
-	y = layers.Conv2D(64, (3, 3)).apply(y)
-	y = layers.Activation('relu').apply(y)
-	y = layers.MaxPooling2D(pool_size=(2, 2)).apply(y)
-	y = layers.Dropout(0.25).apply(y)
+		y = layers.Conv2D(64, (3, 3), padding='same').apply(y)
+		y = layers.Activation('relu').apply(y)
+		y = layers.Conv2D(64, (3, 3)).apply(y)
+		y = layers.Activation('relu').apply(y)
+		y = layers.MaxPooling2D(pool_size=(2, 2)).apply(y)
+		y = layers.Dropout(0.25).apply(y)
 
-	y = layers.Flatten().apply(y)
-	y = layers.Dense(512).apply(y)
-	y = layers.Activation('relu').apply(y)
-	y = layers.Dropout(0.5).apply(y)
-	logits = layers.Dense(100).apply(y)
-	# layers.Activation('softmax').apply(y)
-	# y = tf.keras.layers.Conv2D(16, 8,
-	# 						 strides=2,
-	# 						 padding='same',
-	# 						 activation='relu').apply(input_layer)
-	# y = tf.keras.layers.MaxPool2D(2, 1).apply(y)
-	# y = tf.keras.layers.Conv2D(32, 4,
-	# 						 strides=2,
-	# 						 padding='valid',
-	# 						 activation='relu').apply(y)
-	# y = tf.keras.layers.MaxPool2D(2, 1).apply(y)
-	# y = tf.keras.layers.Flatten().apply(y)
-	# y = tf.keras.layers.Dense(32, activation='relu').apply(y)
-	# logits = tf.keras.layers.Dense(10).apply(y)
+		y = layers.Flatten().apply(y)
+		y = layers.Dense(512).apply(y)
+		y = layers.Activation('relu').apply(y)
+		y = layers.Dropout(0.5).apply(y)
+		logits = layers.Dense(100).apply(y)
+		return logits
+	return model_function_from_model(ff_model, features, labels, mode)
 
-	# Calculate loss as a vector (to support microbatches in DP-SGD).
-	vector_loss = tf.nn.sparse_softmax_cross_entropy_with_logits(labels= labels, logits=logits)
-	# Define mean of loss across minibatch (for reporting through tf.Estimator).
-	scalar_loss = tf.reduce_mean(vector_loss)
-
-	# Configure the training op (for TRAIN mode).
-	if mode == tf.estimator.ModeKeys.TRAIN:
-
-		if FLAGS.dpsgd:
-			ledger = privacy_ledger.PrivacyLedger(
-				population_size=60000,
-				selection_probability=(FLAGS.batch_size / 60000))
-
-			# Use DP version of GradientDescentOptimizer. Other optimizers are
-			# available in dp_optimizer. Most optimizers inheriting from
-			# tf.train.Optimizer should be wrappable in differentially private
-			# counterparts by calling dp_optimizer.optimizer_from_args().
-			optimizer = dp_optimizer.DPGradientDescentGaussianOptimizer(
-				l2_norm_clip=FLAGS.l2_norm_clip,
-				noise_multiplier=FLAGS.noise_multiplier,
-				num_microbatches=FLAGS.microbatches,
-				ledger=ledger,
-				learning_rate=FLAGS.learning_rate)
-			training_hooks = [
-				EpsilonPrintingTrainingHook(ledger)
-			]
-			opt_loss = vector_loss
-		else:
-			optimizer = GradientDescentOptimizer(learning_rate=FLAGS.learning_rate)
-			training_hooks = []
-			opt_loss = scalar_loss
-		global_step = tf.train.get_global_step()
-		train_op = optimizer.minimize(loss=opt_loss, global_step=global_step)
-		# In the following, we pass the mean of the loss (scalar_loss) rather than
-		# the vector_loss because tf.estimator requires a scalar loss. This is only
-		# used for evaluation and debugging by tf.estimator. The actual loss being
-		# minimized is opt_loss defined above and passed to optimizer.minimize().
-		return tf.estimator.EstimatorSpec(mode=mode,
-											loss=scalar_loss,
-											train_op=train_op,
-											training_hooks=training_hooks)
-
-	# Add evaluation metrics (for EVAL mode).
-	elif mode == tf.estimator.ModeKeys.EVAL:
-		eval_metric_ops = {
-			'accuracy':
-				tf.metrics.accuracy(
-					labels=labels,
-					predictions=tf.argmax(input=logits, axis=1))
-		}
-
-		return tf.estimator.EstimatorSpec(mode=mode,
-											loss=scalar_loss,
-											eval_metric_ops=eval_metric_ops)
 
 def load_cifar_pca():
 	print('loaded cifar pca')
