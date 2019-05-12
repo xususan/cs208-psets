@@ -82,6 +82,7 @@ def load_mnist():
 
   train_labels = tf.keras.utils.to_categorical(train_labels, num_classes=10)
   test_labels = tf.keras.utils.to_categorical(test_labels, num_classes=10)
+  print(train_labels.shape)
 
   assert train_data.min() == 0.
   assert train_data.max() == 1.
