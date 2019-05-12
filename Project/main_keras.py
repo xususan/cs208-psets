@@ -129,8 +129,9 @@ def main(unused_argv):
         learning_rate=FLAGS.learning_rate,
         unroll_microbatches=True)
     # Compute vector of per-example loss rather than its mean over a minibatch.
-    loss = tf.keras.losses.CategoricalCrossentropy(
-        from_logits=False, reduction=tf.losses.Reduction.NONE)
+    # loss = tf.keras.losses.CategoricalCrossentropy(
+    #     from_logits=False, reduction=tf.losses.Reduction.NONE)
+    loss = "sparse_categorical_crossentropy"
   else:
     optimizer = GradientDescentOptimizer(learning_rate=FLAGS.learning_rate)
     # loss = tf.keras.losses.CategoricalCrossentropy(from_logits=False)
