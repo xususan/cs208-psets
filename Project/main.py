@@ -29,6 +29,7 @@ from privacy.analysis import privacy_ledger
 from privacy.analysis.rdp_accountant import compute_rdp_from_ledger
 from privacy.analysis.rdp_accountant import get_privacy_spent
 from privacy.optimizers import dp_optimizer
+from sklearn.model_selection import train_test_split
 
 from tensorflow.keras import layers
 # Compatibility with tf 1 and 2 APIs
@@ -315,11 +316,8 @@ def load_cifar_pca():
 	print('loaded cifar pca')
 	xs = np.load('data/cifar_100_features.p',allow_pickle=True)
 	ys = np.load('data/cifar_100_labels.p', allow_pickle=True)
-	train_data = xs[:10000]
-	train_labels = ys[:10000]
 
-	test_data = xs[10000:]
-	test_labels = ys[10000:]
+	train_data, test_data, train_labels, test_labels = train_test_split(xs, ys, train_size=10000)
 
 	train_data = np.array(train_data, dtype=np.float32) / 255
 	test_data = np.array(test_data, dtype=np.float32) / 255
