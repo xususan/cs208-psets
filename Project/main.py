@@ -320,8 +320,8 @@ def load_cifar_pca():
 
 	train_data, test_data, train_labels, test_labels = train_test_split(xs, ys, train_size=10000)
 
-	train_data = np.array(train_data, dtype=np.float32) / 255
-	test_data = np.array(test_data, dtype=np.float32) / 255
+	train_data = np.array(train_data, dtype=np.float32) 
+	test_data = np.array(test_data, dtype=np.float32)
 
 	train_labels = np.array(train_labels, dtype=np.int32).reshape(-1,)
 	test_labels = np.array(test_labels, dtype=np.int32).reshape(-1,)
