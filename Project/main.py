@@ -222,7 +222,7 @@ def cnn_model_fn(features, labels, mode):
 		y = layers.Dropout(0.5).apply(y)
 		logits = layers.Dense(100).apply(y)
 		return logits
-	return model_function_from_model(ff_model, features, labels, mode)
+	return model_function_from_model(cnn_model, features, labels, mode)
 
 
 def load_cifar_pca():
