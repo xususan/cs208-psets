@@ -88,19 +88,40 @@ def main(unused_argv):
 		num_epochs=1,
 		shuffle=False)
 
+	held_input_fn = tf.estimator.inputs.numpy_input_fn(
+		x={'x': held_data},
+		y=held_labels,
+		num_epochs=1,
+		shuffle=False)
+
+	predict_training_input_fn = tf.estimator.inputs.numpy_input_fn(
+		x={'x': train_data},
+		batch_size=1,
+		shuffle=False)
+
 	# Training loop.
 	steps_per_epoch = 60000 // FLAGS.batch_size
 	for epoch in range(1, FLAGS.epochs + 1):
 	# Train the model for one epoch.
 		mnist_classifier.train(input_fn=train_input_fn, steps=steps_per_epoch)
 		eval_results = mnist_classifier.evaluate(input_fn=train_input_fn)
+		train_loss = eval_results['crossentropy']
 		print('Epoch %d / %d: Train Accuracy %.3f \t Loss %.3f' % (epoch, FLAGS.epochs + 1, eval_results['accuracy'], eval_results['crossentropy']))
 
 
 		# Evaluate the model and print results
 		eval_results = mnist_classifier.evaluate(input_fn=eval_input_fn)
 		test_accuracy = eval_results['accuracy']
-		print('Epoch %d / %d: Test Accuracy %.3f \t Loss %.3f' % (epoch, FLAGS.epochs + 1, eval_results['accuracy'], eval_results['crossentropy']))
+		print('\t \t : Test Accuracy %.3f \t Loss %.3f' % (epoch, FLAGS.epochs + 1, eval_results['accuracy'], eval_results['crossentropy']))
+
+		tpr = attack2(mnist_classifier, predict_training_input_fn, train_labels, train_loss)
+		print("Membership Inference Attack: True positive rate = %f" %(tpr))
+
+		fnr = attack2(mnist_classifier, held_input_fn, held_labels, train_loss)
+		print("Membership Inference Attack: True negative rate = %f (held)" %(1 - fnr))
+
+		fnr = attack2(mnist_classifier, eval_input_fn, test_labels, train_loss)
+		print("Membership Inference Attack: True negative rate = %f (test)" %(1 - fnr))
 
 if __name__ == '__main__':
 	app.run(main)

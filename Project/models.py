@@ -313,3 +313,16 @@ def load_cifar():
 	assert test_labels.ndim == 1
 
 	return train_data, train_labels, test_data, test_labels, held_lables, held_data
+
+def attack2(model, input_func, ys, training_error):
+	ys_onehot = tf.keras.utils.to_categorical(ys, num_classes=10)
+	predictions = model.predict(input_fn=input_func)
+
+	logits = np.array(list(x['probabilities'] for x in predictions))
+	#if use_logits:
+	#	probs = softmax(logits, axis=1)
+	#else:
+	#	probs = logits
+	losses = -1*np.sum(ys_onehot * np.log(logits), axis=1)
+	return np.mean(np.array(losses) < training_error)
+	

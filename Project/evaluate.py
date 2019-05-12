@@ -18,18 +18,7 @@ np.random.seed(31415)
 tf.random.set_random_seed(31415)
 
 
-def attack2(model, input_func, ys, training_error):
-	ys_onehot = tf.keras.utils.to_categorical(ys, num_classes=10)
-	predictions = model.predict(input_fn=input_func)
 
-	logits = np.array(list(x['probabilities'] for x in predictions))
-	#if use_logits:
-	#	probs = softmax(logits, axis=1)
-	#else:
-	#	probs = logits
-	losses = -1*np.sum(ys_onehot * np.log(logits), axis=1)
-	return np.mean(np.array(losses) < training_error)
-	
 
 def main(unused_argv):
 	tf.logging.set_verbosity(tf.logging.INFO)
@@ -94,8 +83,6 @@ def main(unused_argv):
 	test_acc = eval_results['accuracy']
 	test_loss = eval_results['crossentropy']
 	print('Test accuracy is: %.3f, test loss is : %.3f' % (test_acc, test_loss))
-
-	eval_results = mnist_classifier.predict(input_fn=predict_training_input_fn)
 
 
 	tpr = attack2(mnist_classifier, predict_training_input_fn, train_labels, train_loss)
