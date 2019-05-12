@@ -133,7 +133,8 @@ def main(unused_argv):
         from_logits=False, reduction=tf.losses.Reduction.NONE)
   else:
     optimizer = GradientDescentOptimizer(learning_rate=FLAGS.learning_rate)
-    loss = tf.keras.losses.CategoricalCrossentropy(from_logits=False)
+    # loss = tf.keras.losses.CategoricalCrossentropy(from_logits=False)
+    loss = "categorical_crossentropy"
 
   # Compile model with Keras
   model.compile(optimizer=optimizer, loss=loss, metrics=['accuracy'])
