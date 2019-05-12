@@ -156,7 +156,7 @@ def lr_nonpca_model_fn(features, labels, mode):
 
 
 	# C = .00001
-	C = 0
+	C = FLAGS.c
 
 	# Define CNN architecture using tf.keras.layers. layers.Flatten(input_shape=(32, 32, 3)))
 	input_layer = tf.reshape(features['x'], [-1, 32, 32, 3])
