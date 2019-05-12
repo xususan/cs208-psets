@@ -173,7 +173,7 @@ def lr_nonpca_model_fn(features, labels, mode):
 	input_layer = tf.reshape(features['x'], [-1, 32, 32, 3])
 	# model = models.Sequential()
 	y = layers.Flatten().apply(input_layer)
-	y = layers.Dense(
+	logits= layers.Dense(
 		num_classes).apply(y)
 
 	# Calculate loss as a vector (to support microbatches in DP-SGD).
