@@ -85,11 +85,15 @@ def main(unused_argv):
 		shuffle=False)
 
 
-	# Training loop.
 	eval_results = mnist_classifier.evaluate(input_fn=train_input_fn)
 	train_accuracy = eval_results['accuracy']
 	train_loss = eval_results['crossentropy']
-	print('train_accuracy is: %.3f, train_loss is : %.3f' % (train_accuracy, train_loss))
+	print('Train accuracy is: %.3f, Train loss is : %.3f' % (train_accuracy, train_loss))
+
+	eval_results = mnist_classifier.evaluate(input_fn=eval_input_fn)
+	test_acc = eval_results['accuracy']
+	test_loss = eval_results['crossentropy']
+	print('Test accuracy is: %.3f, test loss is : %.3f' % (test_acc, test_loss))
 
 	eval_results = mnist_classifier.predict(input_fn=predict_training_input_fn)
 

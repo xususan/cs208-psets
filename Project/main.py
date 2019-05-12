@@ -65,9 +65,15 @@ def main(unused_argv):
 	else:
 		raise ValueError('not supported flags.model')
 
+	checkpoint_config = tf.estimator.RunConfig(
+		keep_checkpoint_max = 10,       # Retain the 10 most recent checkpoints.
+	)
+
+
 	# Instantiate the tf.Estimator.
 	mnist_classifier = tf.estimator.Estimator(model_fn=model_function,
-											model_dir=FLAGS.model_dir)
+											model_dir=FLAGS.model_dir,
+											config=checkpoint_config)
 
 	# Create tf.Estimator input functions for the training and test data.
 	train_input_fn = tf.estimator.inputs.numpy_input_fn(

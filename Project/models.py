@@ -248,8 +248,10 @@ def cnn_model_fn(features, labels, mode):
 		logits = layers.Dense(num_classes).apply(y)
 		return logits
 
-	# logits = cnn_model(features['x'])
-	logits = cnn_model_4dropout(features['x'])
+	if model_dir == 'cnn_nondp':
+		logits = cnn_model(features['x'])
+	else:
+		logits = cnn_model_4dropout(features['x'])
 	return generate_estimator_spec(logits, features, labels, mode)
 
 
