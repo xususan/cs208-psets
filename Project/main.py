@@ -165,7 +165,7 @@ def lr_model_fn(features, labels, mode):
 	""" Model function for logistic regression."""
 	"""Model function for a feed forward network."""
 
-	C = .0001
+	C = .00001
 
 	def lr_model(x):
 		# Define CNN architecture using tf.keras.layers.
