@@ -248,7 +248,7 @@ def cnn_model_fn(features, labels, mode):
 		logits = layers.Dense(num_classes).apply(y)
 		return logits
 
-	if model_dir == 'cnn_nondp':
+	if FLAGS.model_dir == 'cnn_nondp':
 		logits = cnn_model(features['x'])
 	else:
 		logits = cnn_model_4dropout(features['x'])
