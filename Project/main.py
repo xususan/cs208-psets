@@ -166,6 +166,7 @@ def lr_nonpca_model_fn(features, labels, mode):
 	""" Model function for logistic regression."""
 	"""Model function for a feed forward network."""
 
+
 	# C = .00001
 	C = 0
 
@@ -173,7 +174,7 @@ def lr_nonpca_model_fn(features, labels, mode):
 	input_layer = tf.reshape(features['x'], [-1, 32, 32, 3])
 	# model = models.Sequential()
 	y = layers.Flatten().apply(input_layer)
-	logits= layers.Dense(
+	logits = layers.Dense(
 		num_classes).apply(y)
 
 	# Calculate loss as a vector (to support microbatches in DP-SGD).
@@ -399,6 +400,7 @@ def main(unused_argv):
 			model_function = lr_model_fn
 		else:
 			model_function = lr_nonpca_model_fn
+			print("NON PCA LOGISTIC")
 	else:
 		raise ValueError('not supported flags.model')
 
