@@ -341,20 +341,17 @@ def lr_model_fn(features, labels, mode):
 def ff_model_fn(features, labels, mode):
 	"""Model function for a feed forward network."""
 	C = .00001
+	C = FLAGS.c
 
 	# Define FF architecture using tf.keras.layers.
 	# input_layer = tf.reshape(x, [-1, 50])
 
 	input_layer = tf.reshape(features['x'], [-1, 32, 32, 3])
 	y = layers.Flatten().apply(input_layer)
-	y = layers.Dense(50).apply(y)
-	logits= layers.Dense(num_classes).apply(y)
+	y = layers.Dense(50, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
+	logits= layers.Dense(num_classes, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
 
 
-
-	# input_layer = tf.reshape(features['x'], [-1, 32, 32, 3])
-	# y = layers.Flatten().apply(input_layer)
-	# # model = models.Sequential()
 	# y = layers.Dense(
 	# 	50, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(C)
 	# 	).apply(y)
