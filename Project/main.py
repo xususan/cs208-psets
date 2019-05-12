@@ -156,7 +156,11 @@ def model_function_from_model(model, features, labels, mode):
 			'accuracy':
 				tf.metrics.accuracy(
 					labels=labels,
-					predictions=tf.argmax(input=logits, axis=1))
+					predictions=tf.argmax(input=logits, axis=1)),
+			'crossentropy':
+				tf.metrics.mean(
+					scalar_loss
+					)
 		}
 
 		return tf.estimator.EstimatorSpec(mode=mode,
@@ -432,14 +436,13 @@ def main(unused_argv):
 	# Train the model for one epoch.
 		mnist_classifier.train(input_fn=train_input_fn, steps=steps_per_epoch)
 		eval_results = mnist_classifier.evaluate(input_fn=train_input_fn)
-		train_accuracy = eval_results['accuracy']
-		print('train_accuracy after %d epochs is: %.3f' % (epoch, train_accuracy))
+		print('Epoch %d / %d: Train Accuracy %.3f \t Loss %.3f' % (epoch, FLAGS.epochs + 1, eval_results['accuracy'], eval_results['crossentropy']))
 
 
 		# Evaluate the model and print results
 		eval_results = mnist_classifier.evaluate(input_fn=eval_input_fn)
 		test_accuracy = eval_results['accuracy']
-		print('Test accuracy after %d epochs is: %.3f' % (epoch, test_accuracy))
+		print('Epoch %d / %d: Test Accuracy %.3f \t Loss %.3f' % (epoch, FLAGS.epochs + 1, eval_results['accuracy'], eval_results['crossentropy']))
 
 if __name__ == '__main__':
 	app.run(main)
