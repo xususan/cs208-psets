@@ -255,8 +255,8 @@ def load_cifar():
 	train_data, train_labels = train
 	test_data, test_labels = test
 
-	train_data = np.array(train_data, dtype=np.float32) / 255
-	test_data = np.array(test_data, dtype=np.float32) / 255
+	train_data = np.array(train_data, dtype=np.float32) / 255.0
+	test_data = np.array(test_data, dtype=np.float32) / 255.0
 
 	train_labels = np.array(train_labels, dtype=np.int32).reshape(-1,)
 	test_labels = np.array(test_labels, dtype=np.int32).reshape(-1,)
