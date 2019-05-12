@@ -423,6 +423,8 @@ def main(unused_argv):
 	train_accuracy = eval_results['accuracy']
 	print('train_accuracy is: %.3f' % (train_accuracy))
 
+	eval_results = mnist_classifier.predict(input_fn=train_input_fn)
+
 
 
 	attack2(mnist_classifier, train_input_fn, train_labels, 1.55, use_logits=True)
