@@ -230,8 +230,8 @@ def lr_nonpca_model_fn(features, labels, mode):
 		}
 
 		return tf.estimator.EstimatorSpec(mode=mode,
-																			loss=scalar_loss,
-																			eval_metric_ops=eval_metric_ops)
+			loss=scalar_loss,
+			eval_metric_ops=eval_metric_ops)
 
 
 

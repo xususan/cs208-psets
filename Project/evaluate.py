@@ -48,6 +48,18 @@ flags.DEFINE_boolean('pca', False, 'if True, use PCA models. if False, use full 
 
 num_classes = 10
 
+def attack2(model, xs, ys, training_error, use_logits=True):
+	ys_onehot = tf.keras.utils.to_categorical(ys, num_classes=10)
+	logits = model.predict(xs)
+	if use_logits:
+		probs = softmax(logits, axis=1)
+	else:
+		probs = logits
+	losses = -1*np.sum(ys_onehot * np.log(logits), axis=1)
+	return(np.array(losses))
+	return np.mean(np.array(losses) < training_error)
+
+
 
 class EpsilonPrintingTrainingHook(tf.estimator.SessionRunHook):
 	"""Training hook to print current value of epsilon after an epoch."""
@@ -405,8 +417,12 @@ def main(unused_argv):
 
 	# Training loop.
 	eval_results = mnist_classifier.evaluate(input_fn=train_input_fn)
-	train_accuracy = eval_results['accuracy']
+	train_accuracy = eval_results['accuracy', '']
 	print('train_accuracy is: %.3f' % (train_accuracy))
+
+
+
+	attack2(mnist_classifier, {'x': train_data}, train_labels, 1.55, use_logits=True):
 
 
 if __name__ == '__main__':
