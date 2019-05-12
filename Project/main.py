@@ -222,7 +222,7 @@ def cnn_model_fn(features, labels, mode):
 	def cnn_model(x):
 		# Define CNN architecture using tf.keras.layers.
 		y = tf.reshape(x, [-1, 32, 32, 3])
-		y = layers.Conv2D(32, (3, 3), padding='same', filters=96, kernel_size=(3,3)).apply(y)
+		y = layers.Conv2D(96, (3, 3), padding='same').apply(y)
 		y = layers.Activation('relu').apply(y)
 		# y = layers.Conv2D(32, (3, 3)).apply(y)
 		y = layers.Conv2D(filters=192, kernel_size=(3,3), strides=2).apply(y)
