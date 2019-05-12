@@ -185,7 +185,7 @@ def lr_nonpca_model_fn(features, labels, mode):
 	# Configure the training op (for TRAIN mode).
 	if mode == tf.estimator.ModeKeys.TRAIN:
 
-		if FLAGS.dpsgd:
+		if FLAGS.dp:
 			ledger = privacy_ledger.PrivacyLedger(
 					population_size=60000,
 					selection_probability=(FLAGS.batch_size / 60000))
