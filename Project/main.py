@@ -35,6 +35,8 @@ from tensorflow.keras import layers
 # Compatibility with tf 1 and 2 APIs
 try:
 	GradientDescentOptimizer = tf.compat.v1.train.GradientDescentOptimizer
+	AdamOptimizer = tf.compat.v1.train.AdamOptimizer
+	AdagradOptimizer = tf.compat.v1.train.AdagradOptimizer
 except:  # pylint: disable=bare-except
 	GradientDescentOptimizer = tf.optimizers.SGD  # pylint: disable=invalid-name
 np.random.seed(31415)
@@ -42,8 +44,10 @@ tf.random.set_random_seed(31415)
 FLAGS = flags.FLAGS
 
 flags.DEFINE_boolean(
-	'dpsgd', True, 'If True, train with DP-SGD. If False, '
-	'train with vanilla SGD.')
+	'dp', True, 'If True, train with DP-optimizer. If False, '
+	'train with non-private optimizer.')
+flags.DEFINE_string(
+	'optim', 'sgd', 'which optimizer to use')
 flags.DEFINE_float('learning_rate', .15, 'Learning rate for training')
 flags.DEFINE_float('noise_multiplier', 1.1,
 					 'Ratio of the standard deviation to the clipping norm')
@@ -79,20 +83,8 @@ class EpsilonPrintingTrainingHook(tf.estimator.SessionRunHook):
 		eps = get_privacy_spent(orders, rdp, target_delta=1e-5)[0]
 		print('For delta=1e-5, the current epsilon is: %.2f' % eps)
 
-def lr_model_fn(features, labels, mode):
-	""" Model function for logistic regression."""
-	"""Model function for a feed forward network."""
-
-	C = .0001
-
-	# Define CNN architecture using tf.keras.layers.
-	input_layer = tf.reshape(features['x'], [-1, 50])
-	# model = models.Sequential()
-	y = layers.Dense(
-		100, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(input_layer)
-	logits = y
-
-
+def model_function_from_model(model, features, labels, mode):
+	logits = model(features['x'])
 
 	# Calculate loss as a vector (to support microbatches in DP-SGD).
 	vector_loss = tf.nn.sparse_softmax_cross_entropy_with_logits(labels= labels,logits=logits)
@@ -102,7 +94,7 @@ def lr_model_fn(features, labels, mode):
 	# Configure the training op (for TRAIN mode).
 	if mode == tf.estimator.ModeKeys.TRAIN:
 
-		if FLAGS.dpsgd:
+		if FLAGS.dp:
 			ledger = privacy_ledger.PrivacyLedger(
 				population_size=60000,
 				selection_probability=(FLAGS.batch_size / 60000))
@@ -111,7 +103,18 @@ def lr_model_fn(features, labels, mode):
 			# available in dp_optimizer. Most optimizers inheriting from
 			# tf.train.Optimizer should be wrappable in differentially private
 			# counterparts by calling dp_optimizer.optimizer_from_args().
-			optimizer = dp_optimizer.DPGradientDescentGaussianOptimizer(
+			if FLAGS.optim == 'sgd':
+				optimizer_func = dp_optimizer.DPGradientDescentGaussianOptimizer
+			elif FLAGS.optim == 'adam':
+				optimizer_func = dp_optimizer.DPAdamGaussianOptimizer
+			elif FLAGS.optim == 'adagrad':
+				optimizer_func = dp_optimizer.DPAdagradGaussianOptimizer
+			else:
+				raise ValueError("optimizer function not supported")
+
+
+
+			optimizer = optimizer_func(
 				l2_norm_clip=FLAGS.l2_norm_clip,
 				noise_multiplier=FLAGS.noise_multiplier,
 				num_microbatches=FLAGS.microbatches,
@@ -122,6 +125,14 @@ def lr_model_fn(features, labels, mode):
 			]
 			opt_loss = vector_loss
 		else:
+			if FLAGS.optim == 'sgd':
+				optimizer_func = GradientDescentOptimizer
+			elif FLAGS.optim == 'adam':
+				optimizer_func = AdamOptimizer
+			elif FLAGS.optim == 'adagrad':
+				optimizer_func = AdagradOptimizer
+			else:
+				raise ValueError("optimizer function not supported")
 			optimizer = GradientDescentOptimizer(learning_rate=FLAGS.learning_rate)
 			training_hooks = []
 			opt_loss = scalar_loss
@@ -148,6 +159,25 @@ def lr_model_fn(features, labels, mode):
 		return tf.estimator.EstimatorSpec(mode=mode,
 											loss=scalar_loss,
 											eval_metric_ops=eval_metric_ops)
+
+
+def lr_model_fn(features, labels, mode):
+	""" Model function for logistic regression."""
+	"""Model function for a feed forward network."""
+
+	C = .0001
+
+	def lr_model(x):
+		# Define CNN architecture using tf.keras.layers.
+		input_layer = tf.reshape(x, [-1, 50])
+		# model = models.Sequential()
+		y = layers.Dense(
+			100, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(input_layer)
+		return y
+
+	return model_function_from_model(lr_model, features, labels, mode)
+
+
 
 def ff_model_fn(features, labels, mode):
 	"""Model function for a feed forward network."""
@@ -355,7 +385,7 @@ def load_cifar():
 
 def main(unused_argv):
 	tf.logging.set_verbosity(tf.logging.INFO)
-	if FLAGS.dpsgd and FLAGS.batch_size % FLAGS.microbatches != 0:
+	if FLAGS.dp and FLAGS.batch_size % FLAGS.microbatches != 0:
 		raise ValueError('Number of microbatches should divide evenly batch_size')
 
 	# Load training and test data.
