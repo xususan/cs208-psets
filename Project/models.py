@@ -20,7 +20,7 @@ try:
 	AdagradOptimizer = tf.compat.v1.train.AdagradOptimizer
 except:  # pylint: disable=bare-except
 	GradientDescentOptimizer = tf.optimizers.SGD  # pylint: disable=invalid-name
-	
+
 FLAGS = flags.FLAGS
 flags.DEFINE_boolean(
 	'dp', True, 'If True, train with DP-optimizer. If False, '
@@ -65,6 +65,12 @@ class EpsilonPrintingTrainingHook(tf.estimator.SessionRunHook):
 		print('For delta=1e-5, the current epsilon is: %.2f' % eps)
 
 def generate_estimator_spec(logits, features, labels, mode):
+	if mode == tf.estimator.ModeKeys.PREDICT:
+		predictions = {
+		'probabilities': tf.nn.softmax(logits),
+		'logits': logits,
+		}
+		return tf.estimator.EstimatorSpec(mode, predictions=predictions)
 	# Calculate loss as a vector (to support microbatches in DP-SGD).
 	vector_loss = tf.nn.sparse_softmax_cross_entropy_with_logits(labels= labels,logits=logits)
 	# Define mean of loss across minibatch (for reporting through tf.Estimator).
@@ -142,14 +148,6 @@ def generate_estimator_spec(logits, features, labels, mode):
 		return tf.estimator.EstimatorSpec(mode=mode,
 											loss=scalar_loss,
 											eval_metric_ops=eval_metric_ops)
-
-	# Predict mode
-	elif mode == tf.estimator.ModeKeys.PREDICT:
-		predictions = {
-		'probabilities': tf.nn.softmax(logits),
-		'logits': logits,
-		}
-		return tf.estimator.EstimatorSpec(mode, predictions=predictions)
 
 
 def lr_nonpca_model_fn(features, labels, mode):

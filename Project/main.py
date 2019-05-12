@@ -27,13 +27,7 @@ import tensorflow as tf
 
 from models import *
 
-# Compatibility with tf 1 and 2 APIs
-try:
-	GradientDescentOptimizer = tf.compat.v1.train.GradientDescentOptimizer
-	AdamOptimizer = tf.compat.v1.train.AdamOptimizer
-	AdagradOptimizer = tf.compat.v1.train.AdagradOptimizer
-except:  # pylint: disable=bare-except
-	GradientDescentOptimizer = tf.optimizers.SGD  # pylint: disable=invalid-name
+
 np.random.seed(31415)
 tf.random.set_random_seed(31415)
 
