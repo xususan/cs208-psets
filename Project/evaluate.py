@@ -417,7 +417,7 @@ def main(unused_argv):
 
 	# Training loop.
 	eval_results = mnist_classifier.evaluate(input_fn=train_input_fn)
-	train_accuracy = eval_results['accuracy', '']
+	train_accuracy = eval_results['accuracy']
 	print('train_accuracy is: %.3f' % (train_accuracy))
 
 
