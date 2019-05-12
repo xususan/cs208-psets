@@ -425,7 +425,7 @@ def main(unused_argv):
 
 
 
-	attack2(mnist_classifier, eval_input_fn, train_labels, 1.55, use_logits=True)
+	attack2(mnist_classifier, train_input_fn, train_labels, 1.55, use_logits=True)
 
 
 if __name__ == '__main__':
