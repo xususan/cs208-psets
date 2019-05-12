@@ -276,6 +276,8 @@ def main(unused_argv):
 	else:
 		train_data, train_labels, test_data, test_labels = load_cifar()
 
+	print(train_data.shape)
+
 	if FLAGS.model == 'cnn':
 		model_function = cnn_model_fn
 	elif FLAGS.model == 'ff':
