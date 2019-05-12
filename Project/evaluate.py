@@ -49,9 +49,9 @@ flags.DEFINE_boolean('pca', False, 'if True, use PCA models. if False, use full 
 
 num_classes = 10
 
-def attack2(model, xs, ys, training_error, use_logits=True):
+def attack2(model, xs_input_fn, ys, training_error, use_logits=True):
 	ys_onehot = tf.keras.utils.to_categorical(ys, num_classes=10)
-	logits = np.array(list(model.predict(xs)))
+	logits = np.array(list(model.predict(input_fn=xs_input_fn)))
 	pdb.set_trace()
 	if use_logits:
 		probs = softmax(logits, axis=1)
