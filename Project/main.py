@@ -201,27 +201,49 @@ def ff_model_fn(features, labels, mode):
 def cnn_model_fn(features, labels, mode):
 	"""Model function for a CNN."""
 
+	def cnn_model2(x):
+		model = Sequential()
+		model.add(Conv2D(input_shape=trainX[0,:,:,:].shape, filters=96, kernel_size=(3,3)))
+		model.add(Activation('relu'))
+		model.add(Conv2D(filters=96, kernel_size=(3,3), strides=2))
+		model.add(Activation('relu'))
+		model.add(Dropout(0.2))
+		model.add(Conv2D(filters=192, kernel_size=(3,3)))
+		model.add(Activation('relu'))
+		model.add(Conv2D(filters=192, kernel_size=(3,3), strides=2))
+		model.add(Activation('relu'))
+		model.add(Dropout(0.5))
+		model.add(Flatten())
+		model.add(BatchNormalization())
+		model.add(Dense(256))
+		model.add(Activation('relu'))
+		model.add(Dense(n_classes, activation="softmax"))
+
 	def cnn_model(x):
 		# Define CNN architecture using tf.keras.layers.
 		y = tf.reshape(x, [-1, 32, 32, 3])
-		y = layers.Conv2D(32, (3, 3), padding='same').apply(y)
+		y = layers.Conv2D(32, (3, 3), padding='same', filters=96, kernel_size=(3,3)).apply(y)
 		y = layers.Activation('relu').apply(y)
-		y = layers.Conv2D(32, (3, 3)).apply(y)
+		# y = layers.Conv2D(32, (3, 3)).apply(y)
+		y = layers.Conv2D(filters=192, kernel_size=(3,3), strides=2).apply(y)
 		y = layers.Activation('relu').apply(y)
-		y = layers.MaxPooling2D(pool_size=(2, 2)).apply(y)
+		# y = layers.MaxPooling2D(pool_size=(2, 2)).apply(y)
 		y = layers.Dropout(0.25).apply(y)
+		y = layers.Conv2D(filters=192, kernel_size=(3,3), strides=2).apply(y)
 
-		y = layers.Conv2D(64, (3, 3), padding='same').apply(y)
+		# y = layers.Conv2D(64, (3, 3), padding='same').apply(y)
 		y = layers.Activation('relu').apply(y)
-		y = layers.Conv2D(64, (3, 3)).apply(y)
+		# y = layers.Conv2D(64, (3, 3)).apply(y)
+		y = layers.Conv2D(filters=192, kernel_size=(3,3), strides=2).apply(y)
 		y = layers.Activation('relu').apply(y)
-		y = layers.MaxPooling2D(pool_size=(2, 2)).apply(y)
-		y = layers.Dropout(0.25).apply(y)
+		# y = layers.MaxPooling2D(pool_size=(2, 2)).apply(y)
+		y = layers.Dropout(0.5).apply(y)
 
 		y = layers.Flatten().apply(y)
-		y = layers.Dense(512).apply(y)
+		y = layers.BatchNormalization().apply(y)
+		y = layers.Dense(256).apply(y)
 		y = layers.Activation('relu').apply(y)
-		y = layers.Dropout(0.5).apply(y)
+		# y = layers.Dropout(0.5).apply(y)
 		logits = layers.Dense(num_classes).apply(y)
 		return logits
 	return model_function_from_model(cnn_model, features, labels, mode)
