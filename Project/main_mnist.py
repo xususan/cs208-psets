@@ -161,6 +161,8 @@ def load_mnist():
   train_labels = np.array(train_labels, dtype=np.int32)
   test_labels = np.array(test_labels, dtype=np.int32)
 
+  print(train_labels.shape)
+
   assert train_data.min() == 0.
   assert train_data.max() == 1.
   assert test_data.min() == 0.
