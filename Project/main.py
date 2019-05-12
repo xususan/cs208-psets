@@ -83,10 +83,11 @@ def lr_model_fn(features, labels, mode):
 	""" Model function for logistic regression."""
 	"""Model function for a feed forward network."""
 
-	C = .0001
+	C = FlAGS.c
 
 	# Define CNN architecture using tf.keras.layers.
 	input_layer = tf.reshape(features['x'], [-1, 50])
+	pdb.set_trace()
 	# model = models.Sequential()
 	y = layers.Dense(
 		100, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(input_layer)
@@ -151,8 +152,7 @@ def lr_model_fn(features, labels, mode):
 
 def ff_model_fn(features, labels, mode):
 	"""Model function for a feed forward network."""
-
-	C = .00001
+	C = FlAGS.c
 
 	# Define CNN architecture using tf.keras.layers.
 	input_layer = tf.reshape(features['x'], [-1, 50])
