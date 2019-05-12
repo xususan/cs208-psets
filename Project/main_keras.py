@@ -115,7 +115,7 @@ def main(unused_argv):
       tf.keras.layers.MaxPool2D(2, 1),
       tf.keras.layers.Flatten(),
       tf.keras.layers.Dense(32, activation='relu'),
-      tf.keras.layers.Dense(10)
+      tf.keras.layers.Dense(10, activation='softmax')
   ])
 
   if FLAGS.dpsgd:
@@ -130,10 +130,10 @@ def main(unused_argv):
         unroll_microbatches=True)
     # Compute vector of per-example loss rather than its mean over a minibatch.
     loss = tf.keras.losses.CategoricalCrossentropy(
-        from_logits=True, reduction=tf.losses.Reduction.NONE)
+        from_logits=False, reduction=tf.losses.Reduction.NONE)
   else:
     optimizer = GradientDescentOptimizer(learning_rate=FLAGS.learning_rate)
-    loss = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
+    loss = tf.keras.losses.CategoricalCrossentropy(from_logits=False)
 
   # Compile model with Keras
   model.compile(optimizer=optimizer, loss=loss, metrics=['accuracy'])
