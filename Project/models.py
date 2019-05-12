@@ -32,6 +32,7 @@ flags.DEFINE_float('noise_multiplier', 1.1,
 					 'Ratio of the standard deviation to the clipping norm')
 flags.DEFINE_float('l2_norm_clip', 1.0, 'Clipping norm')
 flags.DEFINE_float('c', .00001, 'L2 regularization constant (C)')
+flags.DEFINE_float('dropout', None, 'Dropout probability')
 flags.DEFINE_integer('batch_size', 256, 'Batch size')
 flags.DEFINE_integer('epochs', 60, 'Number of epochs')
 flags.DEFINE_integer(
@@ -206,53 +207,49 @@ def ff_model_fn(features, labels, mode):
 def cnn_model_fn(features, labels, mode):
 	"""Model function for a CNN."""
 
-	def cnn_model2(x):
-		model = Sequential()
-		model.add(Conv2D(input_shape=trainX[0,:,:,:].shape, filters=96, kernel_size=(3,3)))
-		model.add(Activation('relu'))
-		model.add(Conv2D(filters=96, kernel_size=(3,3), strides=2))
-		model.add(Activation('relu'))
-		model.add(Dropout(0.2))
-		model.add(Conv2D(filters=192, kernel_size=(3,3)))
-		model.add(Activation('relu'))
-		model.add(Conv2D(filters=192, kernel_size=(3,3), strides=2))
-		model.add(Activation('relu'))
-		model.add(Dropout(0.5))
-		model.add(Flatten())
-		model.add(BatchNormalization())
-		model.add(Dense(256))
-		model.add(Activation('relu'))
-		# model.add(Dense(n_classes, activation="softmax"))
+	def cnn_model_4dropout(x):
+		# Define CNN architecture using tf.keras.layers.
+		dropout_p = FLAGS.dropout
+		y = tf.reshape(x, [-1, 32, 32, 3])
+		y = layers.Conv2D(96, (3, 3), padding='same', activation='relu').apply(y)
+		y = layers.Dropout(dropout_p).apply(y)
+		y = layers.Conv2D(filters=192, kernel_size=(3,3), strides=2, activation='relu').apply(y)
+		y = layers.Dropout(dropout_p).apply(y)
+		y = layers.Conv2D(filters=192, kernel_size=(3,3), strides=2, activation='relu').apply(y)
+		y = layers.Dropout(dropout_p).apply(y)
+		y = layers.Conv2D(filters=192, kernel_size=(3,3), strides=2, activation='relu').apply(y)
+		y = layers.Dropout(dropout_p).apply(y)
+
+		y = layers.Flatten().apply(y)
+		y = layers.BatchNormalization().apply(y)
+		y = layers.Dense(256, activation='relu').apply(y)
+		logits = layers.Dense(num_classes).apply(y)
+		return logits
 
 	def cnn_model(x):
 		# Define CNN architecture using tf.keras.layers.
 		y = tf.reshape(x, [-1, 32, 32, 3])
 		y = layers.Conv2D(96, (3, 3), padding='same').apply(y)
 		y = layers.Activation('relu').apply(y)
-		# y = layers.Conv2D(32, (3, 3)).apply(y)
 		y = layers.Conv2D(filters=192, kernel_size=(3,3), strides=2).apply(y)
 		y = layers.Activation('relu').apply(y)
-		# y = layers.MaxPooling2D(pool_size=(2, 2)).apply(y)
 		y = layers.Dropout(0.25).apply(y)
 		y = layers.Conv2D(filters=192, kernel_size=(3,3), strides=2).apply(y)
 
-		# y = layers.Conv2D(64, (3, 3), padding='same').apply(y)
 		y = layers.Activation('relu').apply(y)
-		# y = layers.Conv2D(64, (3, 3)).apply(y)
 		y = layers.Conv2D(filters=192, kernel_size=(3,3), strides=2).apply(y)
 		y = layers.Activation('relu').apply(y)
-		# y = layers.MaxPooling2D(pool_size=(2, 2)).apply(y)
 		y = layers.Dropout(0.5).apply(y)
 
 		y = layers.Flatten().apply(y)
 		y = layers.BatchNormalization().apply(y)
 		y = layers.Dense(256).apply(y)
 		y = layers.Activation('relu').apply(y)
-		# y = layers.Dropout(0.5).apply(y)
 		logits = layers.Dense(num_classes).apply(y)
 		return logits
 
-	logits = cnn_model(features['x'])
+	# logits = cnn_model(features['x'])
+	logits = cnn_model_4dropout(features['x'])
 	return generate_estimator_spec(logits, features, labels, mode)
 
 
