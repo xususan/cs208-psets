@@ -62,6 +62,8 @@ flags.DEFINE_string('model_dir', None, 'Model directory')
 flags.DEFINE_string('model', None, 'ff, lr, or cnn')
 flags.DEFINE_boolean('pca', False, 'if True, use PCA models. if False, use full images.')
 
+num_classes = 10
+
 
 class EpsilonPrintingTrainingHook(tf.estimator.SessionRunHook):
 	"""Training hook to print current value of epsilon after an epoch."""
@@ -172,7 +174,7 @@ def lr_model_fn(features, labels, mode):
 		input_layer = tf.reshape(x, [-1, 50])
 		# model = models.Sequential()
 		y = layers.Dense(
-			100, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(input_layer)
+			num_classes, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(input_layer)
 		return y
 
 	return model_function_from_model(lr_model, features, labels, mode)
@@ -190,7 +192,7 @@ def ff_model_fn(features, labels, mode):
 		y = layers.Dense(
 			50, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(C)
 			).apply(input_layer)
-		logits = layers.Dense(100, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
+		logits = layers.Dense(num_classes, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
 		return y
 
 	return model_function_from_model(ff_model, features, labels, mode)
@@ -220,7 +222,7 @@ def cnn_model_fn(features, labels, mode):
 		y = layers.Dense(512).apply(y)
 		y = layers.Activation('relu').apply(y)
 		y = layers.Dropout(0.5).apply(y)
-		logits = layers.Dense(100).apply(y)
+		logits = layers.Dense(num_classes).apply(y)
 		return logits
 	return model_function_from_model(cnn_model, features, labels, mode)
 
@@ -245,7 +247,11 @@ def load_cifar_pca():
 
 def load_cifar():
 	"""Loads MNIST and preprocesses to combine training and validation data."""
-	train, test = tf.keras.datasets.cifar100.load_data()
+	if num_classes == 100:
+		train, test = tf.keras.datasets.cifar100.load_data()
+	else:
+		train, test = tf.keras.datasets.cifar10.load_data()
+
 	train_data, train_labels = train
 	test_data, test_labels = test
 
