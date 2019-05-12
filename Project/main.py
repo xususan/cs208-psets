@@ -344,13 +344,22 @@ def ff_model_fn(features, labels, mode):
 
 	# Define FF architecture using tf.keras.layers.
 	# input_layer = tf.reshape(x, [-1, 50])
+
 	input_layer = tf.reshape(features['x'], [-1, 32, 32, 3])
-	y = layers.Flatten().apply(input_layer)
 	# model = models.Sequential()
-	y = layers.Dense(
-		50, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(C)
-		).apply(y)
-	logits = layers.Dense(num_classes, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
+	y = layers.Flatten().apply(input_layer)
+	logits = layers.Dense(
+		num_classes).apply(y)
+
+
+
+	# input_layer = tf.reshape(features['x'], [-1, 32, 32, 3])
+	# y = layers.Flatten().apply(input_layer)
+	# # model = models.Sequential()
+	# y = layers.Dense(
+	# 	50, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(C)
+	# 	).apply(y)
+	# logits = layers.Dense(num_classes, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
 
 
 	return generate_estimator_spec(logits, features, labels, mode)
