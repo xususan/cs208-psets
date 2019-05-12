@@ -27,6 +27,28 @@ np.random.seed(31415)
 tf.random.set_random_seed(31415)
 FLAGS = flags.FLAGS
 
+flags.DEFINE_boolean(
+	'dp', True, 'If True, train with DP-optimizer. If False, '
+	'train with non-private optimizer.')
+flags.DEFINE_string(
+	'optim', 'sgd', 'which optimizer to use')
+flags.DEFINE_float('learning_rate', .15, 'Learning rate for training')
+flags.DEFINE_float('noise_multiplier', 1.1,
+					 'Ratio of the standard deviation to the clipping norm')
+flags.DEFINE_float('l2_norm_clip', 1.0, 'Clipping norm')
+flags.DEFINE_float('c', .00001, 'L2 regularization constant (C)')
+flags.DEFINE_integer('batch_size', 256, 'Batch size')
+flags.DEFINE_integer('epochs', 60, 'Number of epochs')
+flags.DEFINE_integer(
+	'microbatches', 256, 'Number of microbatches '
+	'(must evenly divide batch_size)')
+flags.DEFINE_string('model_dir', None, 'Model directory')
+flags.DEFINE_string('model', None, 'ff, lr, or cnn')
+flags.DEFINE_boolean('pca', False, 'if True, use PCA models. if False, use full images.')
+
+num_classes = 10
+
+
 class EpsilonPrintingTrainingHook(tf.estimator.SessionRunHook):
 	"""Training hook to print current value of epsilon after an epoch."""
 
