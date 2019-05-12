@@ -163,7 +163,8 @@ def lr_nonpca_model_fn(features, labels, mode):
 	# model = models.Sequential()
 	y = layers.Flatten().apply(input_layer)
 	logits = layers.Dense(
-		num_classes).apply(y)
+		num_classes,
+		kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
 
 	return generate_estimator_spec(logits, features, labels, mode)
 
