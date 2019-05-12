@@ -48,7 +48,7 @@ def main(unused_argv):
 	if FLAGS.pca:
 		train_data, train_labels, test_data, test_labels = load_cifar_pca()
 	else:
-		train_data, train_labels, test_data, test_labels, held_lables, held_data = load_cifar()
+		train_data, train_labels, test_data, test_labels, held_labels, held_data = load_cifar()
 
 	print(train_data.shape)
 
