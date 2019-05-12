@@ -51,7 +51,7 @@ num_classes = 10
 
 def attack2(model, xs_input_fn, ys, training_error, use_logits=True):
 	ys_onehot = tf.keras.utils.to_categorical(ys, num_classes=10)
-	logits = np.array(list(model.predict(input_fn=xs_input_fn)))
+	logits = model.predict(input_fn=xs_input_fn)
 	pdb.set_trace()
 	if use_logits:
 		probs = softmax(logits, axis=1)
@@ -425,9 +425,11 @@ def main(unused_argv):
 
 	eval_results = mnist_classifier.predict(input_fn=train_input_fn)
 
+	print("try attack")
 
 
-	# attack2(mnist_classifier, train_input_fn, train_labels, 1.55, use_logits=True)
+
+	attack2(mnist_classifier, train_input_fn, train_labels, 1.55, use_logits=True)
 
 
 if __name__ == '__main__':
