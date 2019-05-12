@@ -254,7 +254,7 @@ def load_cifar_pca():
 	xs = np.load('data/cifar_100_features.p',allow_pickle=True)
 	ys = np.load('data/cifar_100_labels.p', allow_pickle=True)
 
-	train_data, test_data, train_labels, test_labels = train_test_split(xs, ys, train_size=10000)
+	train_data, test_data, train_labels, test_labels = train_test_split(xs, ys, train_size=10000, random_state=31415)
 
 	train_data = np.array(train_data, dtype=np.float32) 
 	test_data = np.array(test_data, dtype=np.float32)
