@@ -346,10 +346,9 @@ def ff_model_fn(features, labels, mode):
 	# input_layer = tf.reshape(x, [-1, 50])
 
 	input_layer = tf.reshape(features['x'], [-1, 32, 32, 3])
-	# model = models.Sequential()
 	y = layers.Flatten().apply(input_layer)
-	logits = layers.Dense(
-		num_classes).apply(y)
+	y = layers.Dense(50).apply(y)
+	y = layers.Dense(num_classes).apply(y)
 
 
 
