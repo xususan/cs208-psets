@@ -430,7 +430,7 @@ def main(unused_argv):
 
 	eval_results = mnist_classifier.predict(input_fn=predict_training_input_fn)
 	for result in eval_results:
-		print 'result: %f'.format(result)
+		print('result: %f' % (result))
 
 	print("try attack")
 
