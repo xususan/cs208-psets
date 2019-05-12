@@ -48,6 +48,7 @@ flags.DEFINE_float('learning_rate', .15, 'Learning rate for training')
 flags.DEFINE_float('noise_multiplier', 1.1,
 					 'Ratio of the standard deviation to the clipping norm')
 flags.DEFINE_float('l2_norm_clip', 1.0, 'Clipping norm')
+flags.DEFINE_float('c', .00001, 'L2 regularization constant (C)')
 flags.DEFINE_integer('batch_size', 256, 'Batch size')
 flags.DEFINE_integer('epochs', 60, 'Number of epochs')
 flags.DEFINE_integer(
@@ -151,7 +152,7 @@ def lr_model_fn(features, labels, mode):
 def ff_model_fn(features, labels, mode):
 	"""Model function for a feed forward network."""
 
-	C = .0001
+	C = .00001
 
 	# Define CNN architecture using tf.keras.layers.
 	input_layer = tf.reshape(features['x'], [-1, 50])
