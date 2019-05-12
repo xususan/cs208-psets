@@ -274,7 +274,7 @@ def ff_model_fn(features, labels, mode):
 			50, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(C)
 			).apply(y)
 		logits = layers.Dense(num_classes, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
-		return y
+		return logits
 
 	return model_function_from_model(ff_model, features, labels, mode)
 
