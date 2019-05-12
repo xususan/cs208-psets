@@ -52,6 +52,7 @@ num_classes = 10
 def attack2(model, xs, ys, training_error, use_logits=True):
 	ys_onehot = tf.keras.utils.to_categorical(ys, num_classes=10)
 	logits = model.predict(xs)
+	pdb.set_trace()
 	if use_logits:
 		probs = softmax(logits, axis=1)
 	else:
