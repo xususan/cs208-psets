@@ -283,6 +283,12 @@ def load_cifar():
 	train_labels = np.array(train_labels, dtype=np.int32).reshape(-1,)
 	test_labels = np.array(test_labels, dtype=np.int32).reshape(-1,)
 
+	held_data = train_data[10000:]
+	train_data = train_data[:10000]
+
+	held_lables = train_labels[10000:]
+	train_labels = train_labels[:10000]
+
 	assert train_data.min() == 0.
 	assert train_data.max() == 1.
 	assert test_data.min() == 0.
@@ -290,7 +296,7 @@ def load_cifar():
 	assert train_labels.ndim == 1
 	assert test_labels.ndim == 1
 
-	return train_data, train_labels, test_data, test_labels
+	return train_data, train_labels, test_data, test_labels, held_lables, held_data
 
 
 def main(unused_argv):
@@ -302,7 +308,7 @@ def main(unused_argv):
 	if FLAGS.pca:
 		train_data, train_labels, test_data, test_labels = load_cifar_pca()
 	else:
-		train_data, train_labels, test_data, test_labels = load_cifar()
+		train_data, train_labels, test_data, test_labels, held_lables, held_data = load_cifar()
 
 	print(train_data.shape)
 
