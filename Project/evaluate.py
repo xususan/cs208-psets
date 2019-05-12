@@ -417,19 +417,24 @@ def main(unused_argv):
 		num_epochs=1,
 		shuffle=False)
 
+	predict_training_input_fn = tf.estimator.inputs.numpy_input_fn(
+		x={'x': train_data},
+		batch_size=1,
+		shuffle=False)
+
 
 	# Training loop.
 	eval_results = mnist_classifier.evaluate(input_fn=train_input_fn)
 	train_accuracy = eval_results['accuracy']
 	print('train_accuracy is: %.3f' % (train_accuracy))
 
-	eval_results = mnist_classifier.predict(input_fn=train_input_fn)
+	eval_results = mnist_classifier.predict(input_fn=predict_training_input_fn)
 
 	print("try attack")
 
 
 
-	attack2(mnist_classifier, train_input_fn, train_labels, 1.55, use_logits=True)
+	attack2(mnist_classifier, predict_training_input_fn, train_labels, 1.55, use_logits=True)
 
 
 if __name__ == '__main__':
