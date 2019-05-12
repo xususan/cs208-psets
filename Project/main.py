@@ -87,7 +87,6 @@ def lr_model_fn(features, labels, mode):
 
 	# Define CNN architecture using tf.keras.layers.
 	input_layer = tf.reshape(features['x'], [-1, 50])
-	pdb.set_trace()
 	# model = models.Sequential()
 	y = layers.Dense(
 		100, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(input_layer)
