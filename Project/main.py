@@ -175,7 +175,7 @@ def lr_nonpca_model_fn(features, labels, mode):
 		# model = models.Sequential()
 		y = layers.Flatten().apply(input_layer)
 		y = layers.Dense(
-			num_classes)
+			num_classes).apply(y)
 		return y
 
 	return model_function_from_model(lr_model, features, labels, mode)
