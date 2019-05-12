@@ -14,6 +14,7 @@ from privacy.analysis.rdp_accountant import compute_rdp_from_ledger
 from privacy.analysis.rdp_accountant import get_privacy_spent
 from privacy.optimizers import dp_optimizer
 from sklearn.model_selection import train_test_split
+from scipy.stats import softmax
 
 from tensorflow.keras import layers
 # Compatibility with tf 1 and 2 APIs
