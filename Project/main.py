@@ -61,6 +61,7 @@ flags.DEFINE_integer(
 flags.DEFINE_string('model_dir', None, 'Model directory')
 flags.DEFINE_string('model', None, 'ff, lr, or cnn')
 flags.DEFINE_boolean('pca', False, 'if True, use PCA models. if False, use full images.')
+flags.DEFINE_boolean('verbose', True, 'if True, info level logging. Else error only ')
 
 num_classes = 10
 
@@ -379,7 +380,11 @@ def load_cifar():
 
 
 def main(unused_argv):
-	tf.logging.set_verbosity(tf.logging.INFO)
+	if FLAGS.verbose:
+		tf.logging.set_verbosity(tf.logging.INFO)
+	else:
+		tf.logging.set_verbosity(tf.logging.ERROR)
+
 	if FLAGS.dp and FLAGS.batch_size % FLAGS.microbatches != 0:
 		raise ValueError('Number of microbatches should divide evenly batch_size')
 
