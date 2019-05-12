@@ -107,13 +107,13 @@ def main(unused_argv):
 		eval_results = mnist_classifier.evaluate(input_fn=train_input_fn)
 		train_loss = eval_results['crossentropy']
 		print('=================================================================')
-		print('Epoch %d / %d: Train Accuracy %.3f \t Loss %.3f' % (epoch, FLAGS.epochs + 1, eval_results['accuracy'], eval_results['crossentropy']))
+		print('Epoch %d / %d: Train Accuracy %.3f \t Loss %.3f' % (epoch, FLAGS.epochs, eval_results['accuracy'], eval_results['crossentropy']))
 
 
 		# Evaluate the model and print results
 		eval_results = mnist_classifier.evaluate(input_fn=eval_input_fn)
 		test_accuracy = eval_results['accuracy']
-		print('\t \t : Test Accuracy %.3f \t Loss %.3f' % (epoch, FLAGS.epochs + 1, eval_results['accuracy'], eval_results['crossentropy']))
+		print('\t \t : Test Accuracy %.3f \t Loss %.3f' % ( eval_results['accuracy'], eval_results['crossentropy']))
 
 		tpr = attack2(mnist_classifier, predict_training_input_fn, train_labels, train_loss)
 		print("Membership Inference Attack: True positive rate = %f" %(tpr))
