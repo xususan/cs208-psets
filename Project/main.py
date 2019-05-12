@@ -162,6 +162,23 @@ def model_function_from_model(model, features, labels, mode):
 											loss=scalar_loss,
 											eval_metric_ops=eval_metric_ops)
 
+def lr_nonpca_model_fn(features, labels, mode):
+	""" Model function for logistic regression."""
+	"""Model function for a feed forward network."""
+
+	# C = .00001
+	C = 0
+
+	def lr_model(x):
+		# Define CNN architecture using tf.keras.layers. layers.Flatten(input_shape=(32, 32, 3)))
+		input_layer = tf.reshape(x, [-1, 32, 32, 3])
+		# model = models.Sequential()
+		y = layers.Flatten().apply(input_layer)
+		y = layers.Dense(
+			num_classes)
+		return y
+
+	return model_function_from_model(lr_model, features, labels, mode)
 
 def lr_model_fn(features, labels, mode):
 	""" Model function for logistic regression."""
@@ -317,7 +334,10 @@ def main(unused_argv):
 	elif FLAGS.model == 'ff':
 		model_function = ff_model_fn
 	elif FLAGS.model == 'lr':
-		model_function = lr_model_fn
+		if FLAGS.pca:
+			model_function = lr_model_fn
+		else:
+			model_function = lr_nonpca_model_fn
 	else:
 		raise ValueError('not supported flags.model')
 
