@@ -165,6 +165,14 @@ def generate_estimator_spec(logits, features, labels, mode):
 											loss=scalar_loss,
 											eval_metric_ops=eval_metric_ops)
 
+	# Predict mode
+	elif mode == tf.estimator.ModeKeys.PREDICT:
+		predictions = {
+        'probabilities': tf.nn.softmax(logits),
+        'logits': logits,
+    }
+    return tf.estimator.EstimatorSpec(mode, predictions=predictions)
+
 
 def lr_nonpca_model_fn(features, labels, mode):
 	""" Model function for logistic regression."""
