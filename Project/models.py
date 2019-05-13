@@ -200,11 +200,13 @@ def ff_model_fn(features, labels, mode):
 	input_layer = tf.reshape(features['x'], [-1, 32, 32, 3])
 	y = layers.Flatten().apply(input_layer)
 
+	print(FLAGS.layers)
+
 	for _ in range(FLAGS.layers):
 		y = layers.Dense(50, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
 
-	if not FLAGS.model_dir == 'ff_nondp':
-		y = layers.Dropout(dropout_p).apply(y)
+		if not FLAGS.model_dir == 'ff_nondp':
+			y = layers.Dropout(dropout_p).apply(y)
 
 
 	logits= layers.Dense(num_classes, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
