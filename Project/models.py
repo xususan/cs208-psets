@@ -34,6 +34,7 @@ flags.DEFINE_float('l2_norm_clip', 1.0, 'Clipping norm')
 flags.DEFINE_float('c', .00001, 'L2 regularization constant (C)')
 flags.DEFINE_float('dropout', None, 'Dropout probability')
 flags.DEFINE_integer('batch_size', 256, 'Batch size')
+flags.DEFINE_integer('layers', 1, 'number of layers')
 flags.DEFINE_integer('epochs', 60, 'Number of epochs')
 flags.DEFINE_integer(
 	'microbatches', 256, 'Number of microbatches '
@@ -198,9 +199,14 @@ def ff_model_fn(features, labels, mode):
 
 	input_layer = tf.reshape(features['x'], [-1, 32, 32, 3])
 	y = layers.Flatten().apply(input_layer)
-	y = layers.Dense(50, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
+
+	for _ in range(FLAGS.layers):
+		y = layers.Dense(50, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
+
 	if not FLAGS.model_dir == 'ff_nondp':
 		y = layers.Dropout(dropout_p).apply(y)
+
+
 	logits= layers.Dense(num_classes, kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
 
 
