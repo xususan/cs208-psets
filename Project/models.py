@@ -162,6 +162,7 @@ def lr_nonpca_model_fn(features, labels, mode):
 	input_layer = tf.reshape(features['x'], [-1, 32, 32, 3])
 	# model = models.Sequential()
 	y = layers.Flatten().apply(input_layer)
+	# FLAGS.model_dir in set('lr_dp_noise_9_lr3', 'lr_dp_noise_1_lr15', 'lr_dp_noise_1')
 	logits = layers.Dense(
 		num_classes,
 		kernel_regularizer=tf.keras.regularizers.l2(C)).apply(y)
@@ -188,7 +189,6 @@ def lr_model_fn(features, labels, mode):
 
 def ff_model_fn(features, labels, mode):
 	"""Model function for a feed forward network."""
-	C = .00001
 	C = FLAGS.c
 
 	dropout_p = FLAGS.dropout
