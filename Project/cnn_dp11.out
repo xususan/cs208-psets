@@ -1,0 +1,436 @@
+
+WARNING: The TensorFlow contrib module will not be included in TensorFlow 2.0.
+For more information, please see:
+  * https://github.com/tensorflow/community/blob/master/rfcs/20180907-contrib-sunset.md
+  * https://github.com/tensorflow/addons
+If you depend on functionality not listed there, please file an issue.
+
+(10000, 32, 32, 3)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.03
+Epoch 1 / 60: Train Accuracy 0.293 	 Loss 1.987
+	 	 : Test Accuracy 0.289 	 Loss 2.001
+Membership Inference Attack: True positive rate = 0.560700
+Membership Inference Attack: True negative rate = 0.452525 (held)
+Membership Inference Attack: True negative rate = 0.453800 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.11
+Epoch 2 / 60: Train Accuracy 0.296 	 Loss 2.002
+	 	 : Test Accuracy 0.296 	 Loss 2.024
+Membership Inference Attack: True positive rate = 0.566200
+Membership Inference Attack: True negative rate = 0.446900 (held)
+Membership Inference Attack: True negative rate = 0.442400 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.16
+Epoch 3 / 60: Train Accuracy 0.354 	 Loss 1.886
+	 	 : Test Accuracy 0.343 	 Loss 1.921
+Membership Inference Attack: True positive rate = 0.571400
+Membership Inference Attack: True negative rate = 0.449900 (held)
+Membership Inference Attack: True negative rate = 0.443100 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.19
+Epoch 4 / 60: Train Accuracy 0.361 	 Loss 1.894
+	 	 : Test Accuracy 0.352 	 Loss 1.936
+Membership Inference Attack: True positive rate = 0.569300
+Membership Inference Attack: True negative rate = 0.447275 (held)
+Membership Inference Attack: True negative rate = 0.438700 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.23
+Epoch 5 / 60: Train Accuracy 0.368 	 Loss 1.884
+	 	 : Test Accuracy 0.352 	 Loss 1.929
+Membership Inference Attack: True positive rate = 0.571000
+Membership Inference Attack: True negative rate = 0.448475 (held)
+Membership Inference Attack: True negative rate = 0.443000 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.27
+Epoch 6 / 60: Train Accuracy 0.377 	 Loss 1.867
+	 	 : Test Accuracy 0.364 	 Loss 1.931
+Membership Inference Attack: True positive rate = 0.586100
+Membership Inference Attack: True negative rate = 0.439450 (held)
+Membership Inference Attack: True negative rate = 0.432700 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.30
+Epoch 7 / 60: Train Accuracy 0.391 	 Loss 1.834
+	 	 : Test Accuracy 0.370 	 Loss 1.920
+Membership Inference Attack: True positive rate = 0.587400
+Membership Inference Attack: True negative rate = 0.442600 (held)
+Membership Inference Attack: True negative rate = 0.437900 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.34
+Epoch 8 / 60: Train Accuracy 0.408 	 Loss 1.842
+	 	 : Test Accuracy 0.380 	 Loss 1.939
+Membership Inference Attack: True positive rate = 0.591100
+Membership Inference Attack: True negative rate = 0.444000 (held)
+Membership Inference Attack: True negative rate = 0.445600 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.37
+Epoch 9 / 60: Train Accuracy 0.398 	 Loss 1.939
+	 	 : Test Accuracy 0.379 	 Loss 2.038
+Membership Inference Attack: True positive rate = 0.591900
+Membership Inference Attack: True negative rate = 0.440675 (held)
+Membership Inference Attack: True negative rate = 0.432900 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.41
+Epoch 10 / 60: Train Accuracy 0.416 	 Loss 1.892
+	 	 : Test Accuracy 0.384 	 Loss 2.027
+Membership Inference Attack: True positive rate = 0.587400
+Membership Inference Attack: True negative rate = 0.447675 (held)
+Membership Inference Attack: True negative rate = 0.442000 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.45
+Epoch 11 / 60: Train Accuracy 0.428 	 Loss 1.844
+	 	 : Test Accuracy 0.401 	 Loss 1.966
+Membership Inference Attack: True positive rate = 0.597300
+Membership Inference Attack: True negative rate = 0.439550 (held)
+Membership Inference Attack: True negative rate = 0.431900 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.48
+Epoch 12 / 60: Train Accuracy 0.435 	 Loss 1.881
+	 	 : Test Accuracy 0.397 	 Loss 2.024
+Membership Inference Attack: True positive rate = 0.605500
+Membership Inference Attack: True negative rate = 0.429700 (held)
+Membership Inference Attack: True negative rate = 0.428900 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.52
+Epoch 13 / 60: Train Accuracy 0.444 	 Loss 1.866
+	 	 : Test Accuracy 0.410 	 Loss 2.033
+Membership Inference Attack: True positive rate = 0.611700
+Membership Inference Attack: True negative rate = 0.432975 (held)
+Membership Inference Attack: True negative rate = 0.428900 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.56
+Epoch 14 / 60: Train Accuracy 0.438 	 Loss 1.912
+	 	 : Test Accuracy 0.407 	 Loss 2.113
+Membership Inference Attack: True positive rate = 0.602600
+Membership Inference Attack: True negative rate = 0.435375 (held)
+Membership Inference Attack: True negative rate = 0.436500 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.59
+Epoch 15 / 60: Train Accuracy 0.456 	 Loss 1.917
+	 	 : Test Accuracy 0.421 	 Loss 2.106
+Membership Inference Attack: True positive rate = 0.611800
+Membership Inference Attack: True negative rate = 0.426600 (held)
+Membership Inference Attack: True negative rate = 0.422400 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.63
+Epoch 16 / 60: Train Accuracy 0.454 	 Loss 1.910
+	 	 : Test Accuracy 0.417 	 Loss 2.150
+Membership Inference Attack: True positive rate = 0.616900
+Membership Inference Attack: True negative rate = 0.428775 (held)
+Membership Inference Attack: True negative rate = 0.424600 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.67
+Epoch 17 / 60: Train Accuracy 0.465 	 Loss 1.936
+	 	 : Test Accuracy 0.421 	 Loss 2.178
+Membership Inference Attack: True positive rate = 0.621400
+Membership Inference Attack: True negative rate = 0.425825 (held)
+Membership Inference Attack: True negative rate = 0.421000 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.70
+Epoch 18 / 60: Train Accuracy 0.468 	 Loss 1.908
+	 	 : Test Accuracy 0.426 	 Loss 2.149
+Membership Inference Attack: True positive rate = 0.621200
+Membership Inference Attack: True negative rate = 0.422875 (held)
+Membership Inference Attack: True negative rate = 0.421400 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.74
+Epoch 19 / 60: Train Accuracy 0.468 	 Loss 1.923
+	 	 : Test Accuracy 0.424 	 Loss 2.200
+Membership Inference Attack: True positive rate = 0.618600
+Membership Inference Attack: True negative rate = 0.432300 (held)
+Membership Inference Attack: True negative rate = 0.428600 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.78
+Epoch 20 / 60: Train Accuracy 0.473 	 Loss 1.953
+	 	 : Test Accuracy 0.423 	 Loss 2.242
+Membership Inference Attack: True positive rate = 0.627000
+Membership Inference Attack: True negative rate = 0.423800 (held)
+Membership Inference Attack: True negative rate = 0.415300 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.81
+Epoch 21 / 60: Train Accuracy 0.469 	 Loss 2.027
+	 	 : Test Accuracy 0.427 	 Loss 2.340
+Membership Inference Attack: True positive rate = 0.627800
+Membership Inference Attack: True negative rate = 0.424000 (held)
+Membership Inference Attack: True negative rate = 0.421600 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.85
+Epoch 22 / 60: Train Accuracy 0.478 	 Loss 2.013
+	 	 : Test Accuracy 0.430 	 Loss 2.337
+Membership Inference Attack: True positive rate = 0.634900
+Membership Inference Attack: True negative rate = 0.422525 (held)
+Membership Inference Attack: True negative rate = 0.417000 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.88
+Epoch 23 / 60: Train Accuracy 0.472 	 Loss 2.131
+	 	 : Test Accuracy 0.433 	 Loss 2.478
+Membership Inference Attack: True positive rate = 0.626600
+Membership Inference Attack: True negative rate = 0.425350 (held)
+Membership Inference Attack: True negative rate = 0.422900 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.92
+Epoch 24 / 60: Train Accuracy 0.479 	 Loss 2.017
+	 	 : Test Accuracy 0.436 	 Loss 2.382
+Membership Inference Attack: True positive rate = 0.632100
+Membership Inference Attack: True negative rate = 0.429400 (held)
+Membership Inference Attack: True negative rate = 0.425300 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.96
+Epoch 25 / 60: Train Accuracy 0.489 	 Loss 2.080
+	 	 : Test Accuracy 0.435 	 Loss 2.492
+Membership Inference Attack: True positive rate = 0.636800
+Membership Inference Attack: True negative rate = 0.426600 (held)
+Membership Inference Attack: True negative rate = 0.423200 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 1.99
+Epoch 26 / 60: Train Accuracy 0.488 	 Loss 2.027
+	 	 : Test Accuracy 0.438 	 Loss 2.399
+Membership Inference Attack: True positive rate = 0.639000
+Membership Inference Attack: True negative rate = 0.423325 (held)
+Membership Inference Attack: True negative rate = 0.422000 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.03
+Epoch 27 / 60: Train Accuracy 0.493 	 Loss 2.072
+	 	 : Test Accuracy 0.434 	 Loss 2.473
+Membership Inference Attack: True positive rate = 0.641200
+Membership Inference Attack: True negative rate = 0.422000 (held)
+Membership Inference Attack: True negative rate = 0.415500 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.07
+Epoch 28 / 60: Train Accuracy 0.495 	 Loss 2.105
+	 	 : Test Accuracy 0.437 	 Loss 2.540
+Membership Inference Attack: True positive rate = 0.641900
+Membership Inference Attack: True negative rate = 0.423725 (held)
+Membership Inference Attack: True negative rate = 0.414900 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.10
+Epoch 29 / 60: Train Accuracy 0.504 	 Loss 2.076
+	 	 : Test Accuracy 0.440 	 Loss 2.500
+Membership Inference Attack: True positive rate = 0.646800
+Membership Inference Attack: True negative rate = 0.421625 (held)
+Membership Inference Attack: True negative rate = 0.413100 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.13
+Epoch 30 / 60: Train Accuracy 0.502 	 Loss 2.058
+	 	 : Test Accuracy 0.443 	 Loss 2.496
+Membership Inference Attack: True positive rate = 0.651500
+Membership Inference Attack: True negative rate = 0.420900 (held)
+Membership Inference Attack: True negative rate = 0.416400 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.16
+Epoch 31 / 60: Train Accuracy 0.500 	 Loss 2.086
+	 	 : Test Accuracy 0.438 	 Loss 2.523
+Membership Inference Attack: True positive rate = 0.651200
+Membership Inference Attack: True negative rate = 0.420950 (held)
+Membership Inference Attack: True negative rate = 0.417900 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.19
+Epoch 32 / 60: Train Accuracy 0.499 	 Loss 2.196
+	 	 : Test Accuracy 0.440 	 Loss 2.681
+Membership Inference Attack: True positive rate = 0.649500
+Membership Inference Attack: True negative rate = 0.420325 (held)
+Membership Inference Attack: True negative rate = 0.417100 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.23
+Epoch 33 / 60: Train Accuracy 0.509 	 Loss 2.117
+	 	 : Test Accuracy 0.436 	 Loss 2.656
+Membership Inference Attack: True positive rate = 0.654500
+Membership Inference Attack: True negative rate = 0.420725 (held)
+Membership Inference Attack: True negative rate = 0.420400 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.26
+Epoch 34 / 60: Train Accuracy 0.512 	 Loss 2.067
+	 	 : Test Accuracy 0.438 	 Loss 2.588
+Membership Inference Attack: True positive rate = 0.654500
+Membership Inference Attack: True negative rate = 0.419775 (held)
+Membership Inference Attack: True negative rate = 0.423300 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.29
+Epoch 35 / 60: Train Accuracy 0.510 	 Loss 2.110
+	 	 : Test Accuracy 0.439 	 Loss 2.686
+Membership Inference Attack: True positive rate = 0.652300
+Membership Inference Attack: True negative rate = 0.424225 (held)
+Membership Inference Attack: True negative rate = 0.426100 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.32
+Epoch 36 / 60: Train Accuracy 0.515 	 Loss 2.136
+	 	 : Test Accuracy 0.434 	 Loss 2.704
+Membership Inference Attack: True positive rate = 0.654100
+Membership Inference Attack: True negative rate = 0.422475 (held)
+Membership Inference Attack: True negative rate = 0.422500 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.36
+Epoch 37 / 60: Train Accuracy 0.517 	 Loss 2.150
+	 	 : Test Accuracy 0.436 	 Loss 2.763
+Membership Inference Attack: True positive rate = 0.648800
+Membership Inference Attack: True negative rate = 0.427675 (held)
+Membership Inference Attack: True negative rate = 0.434400 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.39
+Epoch 38 / 60: Train Accuracy 0.525 	 Loss 2.108
+	 	 : Test Accuracy 0.444 	 Loss 2.736
+Membership Inference Attack: True positive rate = 0.655700
+Membership Inference Attack: True negative rate = 0.428600 (held)
+Membership Inference Attack: True negative rate = 0.424300 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.42
+Epoch 39 / 60: Train Accuracy 0.525 	 Loss 2.205
+	 	 : Test Accuracy 0.436 	 Loss 2.882
+Membership Inference Attack: True positive rate = 0.659400
+Membership Inference Attack: True negative rate = 0.429000 (held)
+Membership Inference Attack: True negative rate = 0.429700 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.45
+Epoch 40 / 60: Train Accuracy 0.528 	 Loss 2.195
+	 	 : Test Accuracy 0.433 	 Loss 2.915
+Membership Inference Attack: True positive rate = 0.666700
+Membership Inference Attack: True negative rate = 0.427075 (held)
+Membership Inference Attack: True negative rate = 0.431000 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.48
+Epoch 41 / 60: Train Accuracy 0.522 	 Loss 2.196
+	 	 : Test Accuracy 0.437 	 Loss 2.861
+Membership Inference Attack: True positive rate = 0.657300
+Membership Inference Attack: True negative rate = 0.424675 (held)
+Membership Inference Attack: True negative rate = 0.425500 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.51
+Epoch 42 / 60: Train Accuracy 0.515 	 Loss 2.282/home/ubuntu/anaconda3/envs/tensorflow_p36/lib/python3.6/site-packages/tensorflow/python/ops/gradients_impl.py:110: UserWarning: Converting sparse IndexedSlices to a dense Tensor of unknown shape. This may consume a large amount of memory.
+  "Converting sparse IndexedSlices to a dense Tensor of unknown shape. "
+/vol/cs208-psets/Project/models.py:333: RuntimeWarning: divide by zero encountered in log
+  losses = -1*np.sum(ys_onehot * np.log(logits), axis=1)
+/vol/cs208-psets/Project/models.py:333: RuntimeWarning: invalid value encountered in multiply
+  losses = -1*np.sum(ys_onehot * np.log(logits), axis=1)
+/vol/cs208-psets/Project/models.py:334: RuntimeWarning: invalid value encountered in less
+  return np.mean(np.array(losses) < training_error)
+
+	 	 : Test Accuracy 0.430 	 Loss 2.960
+Membership Inference Attack: True positive rate = 0.658400
+Membership Inference Attack: True negative rate = 0.427150 (held)
+Membership Inference Attack: True negative rate = 0.427800 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.54
+Epoch 43 / 60: Train Accuracy 0.516 	 Loss 2.261
+	 	 : Test Accuracy 0.432 	 Loss 2.938
+Membership Inference Attack: True positive rate = 0.658000
+Membership Inference Attack: True negative rate = 0.426375 (held)
+Membership Inference Attack: True negative rate = 0.430400 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.57
+Epoch 44 / 60: Train Accuracy 0.524 	 Loss 2.244
+	 	 : Test Accuracy 0.439 	 Loss 2.961
+Membership Inference Attack: True positive rate = 0.660500
+Membership Inference Attack: True negative rate = 0.430000 (held)
+Membership Inference Attack: True negative rate = 0.434200 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.60
+Epoch 45 / 60: Train Accuracy 0.518 	 Loss 2.258
+	 	 : Test Accuracy 0.430 	 Loss 3.023
+Membership Inference Attack: True positive rate = 0.666000
+Membership Inference Attack: True negative rate = 0.428900 (held)
+Membership Inference Attack: True negative rate = 0.432000 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.63
+Epoch 46 / 60: Train Accuracy 0.519 	 Loss 2.279
+	 	 : Test Accuracy 0.434 	 Loss 3.028
+Membership Inference Attack: True positive rate = 0.655800
+Membership Inference Attack: True negative rate = 0.429250 (held)
+Membership Inference Attack: True negative rate = 0.434100 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.66
+Epoch 47 / 60: Train Accuracy 0.526 	 Loss 2.292
+	 	 : Test Accuracy 0.441 	 Loss 3.049
+Membership Inference Attack: True positive rate = 0.661800
+Membership Inference Attack: True negative rate = 0.430425 (held)
+Membership Inference Attack: True negative rate = 0.433000 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.68
+Epoch 48 / 60: Train Accuracy 0.522 	 Loss 2.249
+	 	 : Test Accuracy 0.429 	 Loss 2.972
+Membership Inference Attack: True positive rate = 0.653900
+Membership Inference Attack: True negative rate = 0.432425 (held)
+Membership Inference Attack: True negative rate = 0.429500 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.71
+Epoch 49 / 60: Train Accuracy 0.526 	 Loss 2.306
+	 	 : Test Accuracy 0.436 	 Loss 3.038
+Membership Inference Attack: True positive rate = 0.666100
+Membership Inference Attack: True negative rate = 0.423125 (held)
+Membership Inference Attack: True negative rate = 0.424900 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.74
+Epoch 50 / 60: Train Accuracy 0.527 	 Loss 2.278
+	 	 : Test Accuracy 0.437 	 Loss 3.026
+Membership Inference Attack: True positive rate = 0.664100
+Membership Inference Attack: True negative rate = 0.429700 (held)
+Membership Inference Attack: True negative rate = 0.430600 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.77
+Epoch 51 / 60: Train Accuracy 0.522 	 Loss 2.379
+	 	 : Test Accuracy 0.427 	 Loss 3.172
+Membership Inference Attack: True positive rate = 0.667100
+Membership Inference Attack: True negative rate = 0.434525 (held)
+Membership Inference Attack: True negative rate = 0.435300 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.79
+Epoch 52 / 60: Train Accuracy 0.532 	 Loss 2.322
+	 	 : Test Accuracy 0.437 	 Loss 3.110
+Membership Inference Attack: True positive rate = 0.661700
+Membership Inference Attack: True negative rate = 0.426925 (held)
+Membership Inference Attack: True negative rate = 0.429300 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.82
+Epoch 53 / 60: Train Accuracy 0.534 	 Loss 2.352
+	 	 : Test Accuracy 0.437 	 Loss 3.220
+Membership Inference Attack: True positive rate = 0.669000
+Membership Inference Attack: True negative rate = 0.426100 (held)
+Membership Inference Attack: True negative rate = 0.430100 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.85
+Epoch 54 / 60: Train Accuracy 0.534 	 Loss 2.373
+	 	 : Test Accuracy 0.438 	 Loss 3.245
+Membership Inference Attack: True positive rate = 0.670400
+Membership Inference Attack: True negative rate = 0.427000 (held)
+Membership Inference Attack: True negative rate = 0.435500 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.88
+Epoch 55 / 60: Train Accuracy 0.533 	 Loss 2.442
+	 	 : Test Accuracy 0.434 	 Loss 3.309
+Membership Inference Attack: True positive rate = 0.669100
+Membership Inference Attack: True negative rate = 0.428700 (held)
+Membership Inference Attack: True negative rate = 0.426300 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.90
+Epoch 56 / 60: Train Accuracy 0.535 	 Loss 2.425
+	 	 : Test Accuracy 0.431 	 Loss 3.294
+Membership Inference Attack: True positive rate = 0.669800
+Membership Inference Attack: True negative rate = 0.428575 (held)
+Membership Inference Attack: True negative rate = 0.428200 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.93
+Epoch 57 / 60: Train Accuracy 0.536 	 Loss 2.405
+	 	 : Test Accuracy 0.437 	 Loss 3.308
+Membership Inference Attack: True positive rate = 0.672500
+Membership Inference Attack: True negative rate = 0.425850 (held)
+Membership Inference Attack: True negative rate = 0.433200 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.95
+Epoch 58 / 60: Train Accuracy 0.530 	 Loss 2.388
+	 	 : Test Accuracy 0.427 	 Loss 3.269
+Membership Inference Attack: True positive rate = 0.668900
+Membership Inference Attack: True negative rate = 0.429475 (held)
+Membership Inference Attack: True negative rate = 0.440400 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 2.98
+Epoch 59 / 60: Train Accuracy 0.538 	 Loss 2.496
+	 	 : Test Accuracy 0.429 	 Loss 3.472
+Membership Inference Attack: True positive rate = 0.675500
+Membership Inference Attack: True negative rate = 0.429900 (held)
+Membership Inference Attack: True negative rate = 0.437100 (test)
+=================================================================
+For delta=1e-5, the current epsilon is: 3.01
+Epoch 60 / 60: Train Accuracy 0.531 	 Loss 2.507
+	 	 : Test Accuracy 0.425 	 Loss 3.481
+Membership Inference Attack: True positive rate = 0.671900
+Membership Inference Attack: True negative rate = 0.429675 (held)
+Membership Inference Attack: True negative rate = 0.438200 (test)
