@@ -253,8 +253,6 @@ def cnn_model_fn(features, labels, mode):
 		y = layers.Dropout(dropout_p).apply(y)
 		y = layers.Conv2D(filters=192, kernel_size=(3,3), strides=2, activation='relu').apply(y)
 		y = layers.Dropout(dropout_p).apply(y)
-		y = layers.Conv2D(filters=192, kernel_size=(3,3), strides=2, activation='relu').apply(y)
-		y = layers.Dropout(dropout_p).apply(y)
 		y = layers.Flatten().apply(y)
 		y = layers.BatchNormalization().apply(y)
 		y = layers.Dense(256, activation='relu').apply(y)
