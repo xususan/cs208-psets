@@ -101,6 +101,7 @@ def main(unused_argv):
 
 	# Training loop.
 	steps_per_epoch = 60000 // FLAGS.batch_size
+	count_params()
 	for epoch in range(1, FLAGS.epochs + 1):
 	# Train the model for one epoch.
 		print('=================================================================')
