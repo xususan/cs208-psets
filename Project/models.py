@@ -35,6 +35,7 @@ flags.DEFINE_float('c', .00001, 'L2 regularization constant (C)')
 flags.DEFINE_float('dropout', None, 'Dropout probability')
 flags.DEFINE_integer('batch_size', 256, 'Batch size')
 flags.DEFINE_integer('layers', 1, 'number of layers')
+flags.DEFINE_integer('cnn_size', 'full', 'size of cnn: full / mini')
 flags.DEFINE_integer('epochs', 60, 'Number of epochs')
 flags.DEFINE_integer(
 	'microbatches', 256, 'Number of microbatches '
@@ -238,6 +239,20 @@ def cnn_model_fn(features, labels, mode):
 		logits = layers.Dense(num_classes).apply(y)
 		return logits
 
+	def cnn_mini(x):
+		# Define CNN architecture using tf.keras.layers.
+		dropout_p = FLAGS.dropout
+		y = tf.reshape(x, [-1, 32, 32, 3])
+		y = layers.Conv2D(96, (3, 3), padding='same', activation='relu').apply(y)
+		y = layers.Dropout(dropout_p).apply(y)
+		y = layers.Conv2D(filters=192, kernel_size=(3,3), strides=2, activation='relu').apply(y)
+		y = layers.Dropout(dropout_p).apply(y)
+		y = layers.Flatten().apply(y)
+		y = layers.BatchNormalization().apply(y)
+		y = layers.Dense(256, activation='relu').apply(y)
+		logits = layers.Dense(num_classes).apply(y)
+		return logits
+
 	def cnn_model(x):
 		# Define CNN architecture using tf.keras.layers.
 		y = tf.reshape(x, [-1, 32, 32, 3])
@@ -260,10 +275,13 @@ def cnn_model_fn(features, labels, mode):
 		logits = layers.Dense(num_classes).apply(y)
 		return logits
 
-	if FLAGS.model_dir == 'cnn_nondp':
-		logits = cnn_model(features['x'])
+	if FLAGS.cnn_size == 'mini':
+		logits = cnn_mini(features['x'])
 	else:
-		logits = cnn_model_4dropout(features['x'])
+		if FLAGS.model_dir == 'cnn_nondp':
+			logits = cnn_model(features['x'])
+		else:
+			logits = cnn_model_4dropout(features['x'])
 	return generate_estimator_spec(logits, features, labels, mode)
 
 
