@@ -35,7 +35,7 @@ flags.DEFINE_float('c', .00001, 'L2 regularization constant (C)')
 flags.DEFINE_float('dropout', None, 'Dropout probability')
 flags.DEFINE_integer('batch_size', 256, 'Batch size')
 flags.DEFINE_integer('layers', 1, 'number of layers')
-flags.DEFINE_integer('cnn_size', 'full', 'size of cnn: full / mini')
+flags.DEFINE_string('cnn_size', 'full', 'size of cnn: full / mini')
 flags.DEFINE_integer('epochs', 60, 'Number of epochs')
 flags.DEFINE_integer(
 	'microbatches', 256, 'Number of microbatches '
@@ -305,7 +305,11 @@ def load_cifar_pca():
 
 	return train_data, train_labels, test_data, test_labels
 
-
+def count_params():
+    "print number of trainable variables"
+    size = lambda v: reduce(lambda x, y: x*y, v.get_shape().as_list())
+    n = sum(size(v) for v in tf.trainable_variables())
+    print "Model size: %dK" % (n/1000,)
 
 
 def load_cifar():
