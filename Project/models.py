@@ -245,7 +245,7 @@ def cnn_model_fn(features, labels, mode):
 		y = tf.reshape(x, [-1, 32, 32, 3])
 		y = layers.Conv2D(filters=96, kernel_size=(3, 3), padding='same', activation='relu').apply(y)
 		y = layers.Dropout(dropout_p).apply(y)
-		y = layers.Conv2D(filters=20, kernel_size=(3,3), strides=1, activation='relu').apply(y)
+		y = layers.Conv2D(filters=10, kernel_size=(3,3), strides=1, activation='relu').apply(y)
 		y = layers.Dropout(dropout_p).apply(y)
 		y = layers.Flatten().apply(y)
 		# y = layers.BatchNormalization().apply(y)
