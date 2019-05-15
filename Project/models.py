@@ -354,7 +354,7 @@ def attack(model, positive_test_set, negative_test_set, positive_ys, negative_ys
 		losses = -1*np.sum(ys_onehot * np.log(logits), axis=1)
 		all_losses.append(losses)
 
-	for threshold in [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1]:
+	for threshold in np.linspace(.1, 5.1, .5):
 		tp = np.sum(np.array(all_losses[0]) < threshold)
 		fp = np.sum(np.array(all_losses[1]) < threshold)
 		recall = np.mean((np.array(all_losses[0]) < threshold))
