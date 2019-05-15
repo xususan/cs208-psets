@@ -105,7 +105,6 @@ def main(unused_argv):
 	# Train the model for one epoch.
 		print('=================================================================')
 		mnist_classifier.train(input_fn=train_input_fn, steps=steps_per_epoch)
-		count_params()
 		eval_results = mnist_classifier.evaluate(input_fn=train_input_fn)
 		train_loss = eval_results['crossentropy']
 		print('Epoch %d / %d: Train Accuracy %.3f \t Loss %.3f' % (epoch, FLAGS.epochs, eval_results['accuracy'], eval_results['crossentropy']))
