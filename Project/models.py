@@ -243,7 +243,7 @@ def cnn_model_fn(features, labels, mode):
 		# Define CNN architecture using tf.keras.layers.
 		dropout_p = FLAGS.dropout
 		y = tf.reshape(x, [-1, 32, 32, 3])
-		y = layers.Conv2D(filters=96, kernel_size=(3, 3), padding='same', activation='relu').apply(y)
+		y = layers.Conv2D(filters=36, kernel_size=(3, 3), padding='same', activation='relu').apply(y)
 		y = layers.Dropout(dropout_p).apply(y)
 		y = layers.Conv2D(filters=10, kernel_size=(3,3), strides=1, activation='relu').apply(y)
 		y = layers.Dropout(dropout_p).apply(y)
@@ -328,10 +328,10 @@ def load_cifar():
 	train_labels = np.array(train_labels, dtype=np.int32).reshape(-1,)
 	test_labels = np.array(test_labels, dtype=np.int32).reshape(-1,)
 
-	held_data = train_data[10000:]
+	held_data = train_data[10000:20000]
 	train_data = train_data[:10000]
 
-	held_lables = train_labels[10000:]
+	held_lables = train_labels[10000:20000]
 	train_labels = train_labels[:10000]
 
 	assert train_data.min() == 0.
@@ -342,6 +342,27 @@ def load_cifar():
 	assert test_labels.ndim == 1
 
 	return train_data, train_labels, test_data, test_labels, held_lables, held_data
+
+def attack(model, positive_test_set, negative_test_set, positive_ys, negative_ys):
+
+	all_losses = []
+	for input_func, ys in (zip([positive_test_set, negative_test_set], [positive_ys, negative_ys])):
+		ys_onehot = tf.keras.utils.to_categorical(ys, num_classes=10)
+		predictions = model.predict(input_fn=input_func)
+
+		logits = np.array(list(x['probabilities'] for x in predictions))
+		losses = -1*np.sum(ys_onehot * np.log(logits), axis=1)
+		all_losses.append(losses)
+
+	for threshold in [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1]:
+		tp = np.sum(np.array(all_losses[0]) < threshold)
+		fp = np.sum(np.array(all_losses[1]) < threshold)
+		recall = np.mean((np.array(all_losses[0]) < threshold))
+		precision = tp / (tp + fp)
+		print("%f\t%f\t%f" % (threshold, precision, recall))
+	return
+
+
 
 def attack2(model, input_func, ys, training_error):
 	ys_onehot = tf.keras.utils.to_categorical(ys, num_classes=10)

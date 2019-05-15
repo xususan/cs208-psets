@@ -94,6 +94,7 @@ def main(unused_argv):
 	fnr = attack2(mnist_classifier, eval_input_fn, test_labels, train_loss)
 	print("Membership Inference Attack: True negative rate = %f (test)" %(1 - fnr))
 
+	attack(mnist_classifier, predict_training_input_fn, held_input_fn, train_labels, held_labels)
 
 if __name__ == '__main__':
 	app.run(main)
